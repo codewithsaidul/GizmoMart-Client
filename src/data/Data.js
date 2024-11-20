@@ -107,6 +107,31 @@ const products = [
   },
 ];
 
+// Testimonial
+const testimonials = [
+  {
+    id: 1,
+    userName: "Jonathan Smith",
+    profile: "https://i.postimg.cc/rFKXD9Xh/user3.jpg",
+    review:
+      "Absolutely love this store! The products are top-notch, and the customer service is incredible. Highly recommend!",
+  },
+  {
+    id: 2,
+    userName: "Emily Davis",
+    profile: "https://i.postimg.cc/7htFB57M/user2.jpg",
+    review:
+      "Great quality and fast delivery! I’ve bought several items, and each exceeded my expectations. Will shop again soon.",
+  },
+  {
+    id: 3,
+    userName: "Liam Johnson",
+    profile: "https://i.postimg.cc/XN26NzhG/user1.jpg",
+    review:
+      "Amazing experience! The website is easy to use, and the support team is very responsive. Five stars all the way!",
+  },
+];
+
 // Categories List
 const CategoryData = [
   {
@@ -141,4 +166,4 @@ const CategoryData = [
   },
 ];
 
-export { CategoryData, products };
+export { CategoryData, products, testimonials };
