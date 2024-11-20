@@ -4,6 +4,7 @@ import Home from "../pages/Home";
 import About from "../pages/About";
 import Contact from "../pages/Contact";
 import Product from "../pages/Product";
+import Register from "../pages/Authentication/Register";
 // import App from "../App";
 
 
@@ -29,6 +30,10 @@ const router = createBrowserRouter([
                 element: <Contact />
             },
         ]
+    },
+    {
+        path: "/register",
+        element: <Register />
     }
 ])
 
