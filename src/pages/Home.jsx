@@ -1,5 +1,6 @@
 import Banner from "../components/Home/Banner"
 import Category from "../components/Home/Category"
+import Faq from "../components/Home/Faq"
 import FeaturedProducts from "../components/Home/FeaturedProducts"
 import Testimonial from "../components/Home/Testimonial"
 
@@ -13,6 +14,7 @@ const Home = () => {
         <Category />
         <FeaturedProducts />
         <Testimonial />
+        <Faq />
       </div>
     </div>
   )
