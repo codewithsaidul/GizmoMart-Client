@@ -3,7 +3,7 @@ import { Link, NavLink } from "react-router-dom";
 
 const Navbar = () => {
   return (
-    <header className="bg-base-100">
+    <header className="bg-base-100 border-b-2 py-2">
      <div className="navbar px-4 sm:px-8 md:px-12 lg:px-20 mx-auto">
           <div className="navbar-start">
             <div className="dropdown">
@@ -54,6 +54,18 @@ const Navbar = () => {
                   </NavLink>
                 </li>
                 <li>
+                <NavLink
+                  to="/products"
+                  className={({ isActive }) =>
+                    isActive
+                      ? "text-xl font-medium text-primary hover:text-primary duration-500 hover:duration-500"
+                      : "text-xl font-medium text-slate-600 hover:text-primary duration-500 hover:duration-500"
+                  }
+                >
+                  Products
+                </NavLink>
+              </li>
+                <li>
                   <NavLink
                     to="/contact"
                     className={({ isActive }) =>
@@ -68,7 +80,7 @@ const Navbar = () => {
               </ul>
             </div>
     
-            <a href="/" className="text-3xl font-bold text-primary cursor-pointer">
+            <a href="/" className="text-xl sm:text-4xl font-bold text-primary cursor-pointer">
               GizmoMart
             </a>
           </div>
@@ -88,6 +100,7 @@ const Navbar = () => {
                   Home
                 </NavLink>
               </li>
+
               <li>
                 <NavLink
                   to="/about"
@@ -100,6 +113,21 @@ const Navbar = () => {
                   About
                 </NavLink>
               </li>
+              
+
+              <li>
+                <NavLink
+                  to="/products"
+                  className={({ isActive }) =>
+                    isActive
+                      ? "text-xl font-medium text-primary hover:text-primary duration-500 hover:duration-500"
+                      : "text-xl font-medium text-slate-600 hover:text-primary duration-500 hover:duration-500"
+                  }
+                >
+                  Products
+                </NavLink>
+              </li>
+
               <li>
                 <NavLink
                   to="/contact"
@@ -116,7 +144,7 @@ const Navbar = () => {
           </div>
     
           <div className="navbar-end">
-            <button className="py-2 px-4 border-2 border-primary bg-transparent rounded-xl text-xl font-bold text-primary duration-700 hover:text-white hover:bg-primary hover:duration-700">
+            <button className="py-2 px-4 border-2 text-base border-primary bg-transparent rounded-xl sm:text-xl font-bold text-primary duration-700 hover:text-white hover:bg-primary hover:duration-700">
                 <Link to="/register">Sign Up</Link>
             </button>
           </div>
