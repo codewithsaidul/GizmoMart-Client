@@ -1,8 +1,13 @@
+import DashNavbar from "../components/Dashboard/DashNavbar"
 
 
 const DashboardLayout = () => {
   return (
-    <div>DashboardLayout</div>
+    <div>
+      <div>
+        <DashNavbar />
+      </div>
+    </div>
   )
 }
 
