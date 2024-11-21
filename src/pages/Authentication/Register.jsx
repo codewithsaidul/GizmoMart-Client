@@ -1,9 +1,14 @@
 import { useForm } from "react-hook-form";
 import Image from "../../assets/loginimage.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import GoogleLogin from "./GoogleLogin";
+import UseAuth from "../../hooks/UseAuth";
+import axios from "axios";
+import Swal from "sweetalert2";
 
 const Register = () => {
+  const { setUser, CreateUser } = UseAuth();
+
   const {
     register,
     handleSubmit,
@@ -12,29 +17,49 @@ const Register = () => {
     formState: { errors },
   } = useForm();
 
+  // For Navigation after registration
+  const navigate = useNavigate();
+
   //   Handle registration
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     const name = data.name;
     const email = data.email;
     const password = data.password;
-    const confirmPassword = data.confirmPassword;
     const role = data.role;
+    const status = role === "buyer" ? "Approved" : "Pending"
     const cart = [];
     const wishlist = [];
 
     const userInfo = {
       name,
       email,
-      password,
-      confirmPassword,
       role,
+      status,
       cart,
       wishlist,
     };
 
-    reset();
+    // handle New User registration==================================
 
-    console.log(userInfo);
+    CreateUser(email, password).then((result) => {
+      axios
+        .post(`${import.meta.env.VITE_API_URL}/users`, userInfo)
+        .then((res) => {
+          if (res.data.insertedId) {
+            Swal.fire({
+              position: "top-center",
+              icon: "success",
+              title: "Account Created Successfully",
+              showConfirmButton: false,
+              timer: 1500,
+            });
+          }
+          setUser(result.user);
+          navigate("/");
+        });
+    });
+
+    reset();
   };
 
   return (
@@ -46,7 +71,7 @@ const Register = () => {
         </figure>
 
         {/* Registration from */}
-        <div className="w-ful hero lg:w-1/2 order-1 lg:order-2">
+        <div className="w-ful  lg:w-1/2 order-1 lg:order-2">
           <form onSubmit={handleSubmit(onSubmit)} className="w-full">
             <h2 className="text-2xl font-bold mb-6">Create an Account</h2>
             <div>
@@ -178,17 +203,18 @@ const Register = () => {
               </div>
             </div>
 
-            {/* Social Login */}
-            <div>
-              <GoogleLogin />
-              <p className="text-base font-medium text-slate-500 mt-3 text-center">
-                Already have account?{" "}
-                <Link to="/login" className="text-primary font-bold">
-                  Login
-                </Link>
-              </p>
-            </div>
+            
           </form>
+          {/* Social Login */}
+          <div>
+            <GoogleLogin />
+            <p className="text-base font-medium text-slate-500 mt-3 text-center">
+              Already have account?{" "}
+              <Link to="/login" className="text-primary font-bold">
+                Login
+              </Link>
+            </p>
+          </div>
         </div>
       </div>
     </div>
