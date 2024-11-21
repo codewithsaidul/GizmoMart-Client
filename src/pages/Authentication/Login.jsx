@@ -1,9 +1,16 @@
 import { useForm } from "react-hook-form";
 import Image from "../../assets/loginimage.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import GoogleLogin from "./GoogleLogin";
+import UseAuth from "../../hooks/UseAuth";
+import Swal from "sweetalert2";
 
 const Login = () => {
+
+  const { LoginUser } = UseAuth();
+
+  const navigate = useNavigate();
+
   const {
     register,
     handleSubmit,
@@ -15,14 +22,32 @@ const Login = () => {
   const onSubmit = (data) => {
     const email = data.email;
     const password = data.password;
-    const userInfo = {
-      email,
-      password,
-    };
+    
 
-    reset();
+    LoginUser(email, password)
+    .then((result) => {
+      if (result.user) {
+        Swal.fire({
+          position: "top-center",
+          icon: "success",
+          title: "Successfully Logged In!",
+          showConfirmButton: false,
+          timer: 1500
+        });
+        navigate('/')
+        reset();
+      }
+    })
+    .catch (() => {
+      Swal.fire({
+        position: "top-center",
+        icon: "error",
+        title: "Failed to Log In!",
+        showConfirmButton: false,
+        timer: 1500
+      });
+    })
 
-    console.log(userInfo);
   };
 
   return (
