@@ -2,12 +2,19 @@ import { FcGoogle } from "react-icons/fc";
 import UseAuth from "../../hooks/UseAuth";
 import axios from "axios";
 import Swal from "sweetalert2";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 const GoogleLogin = () => {
-  const { setUser, LoginWithGoogle } = UseAuth();
+  const { user, setUser, LoginWithGoogle } = UseAuth();
 
   const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state || "/"
+
+  useEffect(() => {
+    if (user) return navigate('/')
+  }, [user, navigate])
 
   // Handle Google Sign In
   const googleLogin = () => {
@@ -31,7 +38,7 @@ const GoogleLogin = () => {
           });
         }
         setUser(result.user);
-        navigate("/");
+        navigate(from, { replace: true });
       })
     });
   };

@@ -1,15 +1,22 @@
 import { useForm } from "react-hook-form";
 import Image from "../../assets/loginimage.png";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import GoogleLogin from "./GoogleLogin";
 import UseAuth from "../../hooks/UseAuth";
 import Swal from "sweetalert2";
+import { useEffect } from "react";
 
 const Login = () => {
 
-  const { LoginUser } = UseAuth();
+  const { user, LoginUser } = UseAuth();
 
   const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state || "/"
+
+  useEffect(() => {
+    if (user) return navigate('/')
+  }, [user, navigate])
 
   const {
     register,
@@ -34,7 +41,7 @@ const Login = () => {
           showConfirmButton: false,
           timer: 1500
         });
-        navigate('/')
+        navigate(from, { replace: true });
         reset();
       }
     })
@@ -59,7 +66,7 @@ const Login = () => {
         </figure>
 
         {/* Registration from */}
-        <div className="w-ful hero lg:w-1/2 order-1 lg:order-2">
+        <div className="w-ful  lg:w-1/2 order-1 lg:order-2">
           <form onSubmit={handleSubmit(onSubmit)} className="w-full">
             <h2 className="text-2xl font-bold mb-6">LogIn To GizmoMart</h2>
             <div>
@@ -111,6 +118,7 @@ const Login = () => {
               </div>
             </div>
 
+          </form>
             {/* ============ Social Login ===================== */}
             <div>
                 <GoogleLogin />
@@ -121,7 +129,6 @@ const Login = () => {
                 </Link>
               </p>
             </div>
-          </form>
         </div>
       </div>
     </div>

@@ -1,13 +1,14 @@
 import { useForm } from "react-hook-form";
 import Image from "../../assets/loginimage.png";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import GoogleLogin from "./GoogleLogin";
 import UseAuth from "../../hooks/UseAuth";
 import axios from "axios";
 import Swal from "sweetalert2";
+import { useEffect } from "react";
 
 const Register = () => {
-  const { setUser, CreateUser } = UseAuth();
+  const { user, setUser, CreateUser } = UseAuth();
 
   const {
     register,
@@ -19,6 +20,12 @@ const Register = () => {
 
   // For Navigation after registration
   const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state || "/"
+
+  useEffect(() => {
+    if (user) return navigate('/')
+  }, [user, navigate])
 
   //   Handle registration
   const onSubmit = async (data) => {
@@ -55,7 +62,7 @@ const Register = () => {
             });
           }
           setUser(result.user);
-          navigate("/");
+          navigate(from, { replace: true });
         });
     });
 
