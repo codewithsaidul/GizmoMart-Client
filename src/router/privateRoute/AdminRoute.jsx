@@ -1,25 +1,28 @@
 import { Navigate, useLocation } from "react-router-dom";
-import Loading from "../../components/Shared/Loading";
 import UseAuth from "../../hooks/useAuth";
+import Loading from "../../components/Shared/Loading";
 import PropTypes from "prop-types";
+import useUserData from "../../hooks/useUserData";
 
 
-const PrivateRoute = ( { children } ) => {
+const AdminRoute = ( { children } ) => {
     const { user, loading } = UseAuth();
+    const userData = useUserData();
     const location = useLocation();
 
-    if (loading) {
+    if (loading || !userData.role) {
         return <Loading />
     }
 
-    if (user) {
+    if (user && userData.role === "admin") {
         return children
     }
   return <Navigate to="/login" state={location.pathname} replace />
 }
 
-PrivateRoute.propTypes = {
+AdminRoute.propTypes = {
     children: PropTypes.node
 }
 
-export default PrivateRoute
+
+export default AdminRoute
