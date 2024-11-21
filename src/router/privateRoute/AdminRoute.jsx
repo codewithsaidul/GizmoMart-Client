@@ -10,11 +10,11 @@ const AdminRoute = ( { children } ) => {
     const userData = useUserData();
     const location = useLocation();
 
-    if (loading || !userData.role) {
+    if (loading || !userData?.role) {
         return <Loading />
     }
 
-    if (user && userData.role === "admin") {
+    if (user && userData?.role === "admin") {
         return children
     }
   return <Navigate to="/login" state={location.pathname} replace />

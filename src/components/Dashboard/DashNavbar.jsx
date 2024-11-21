@@ -7,10 +7,10 @@ const DashNavbar = ({ handleSidebar }) => {
   const { user } = UseAuth();
 
   return (
-    <div className="bg-white shadow-md px-4 sm:px-8 md:px-12 lg:px-20">
+    <div className="bg-white shadow-md px-4 sm:px-6">
       <div className="flex justify-between items-center h-16">
         <div className="flex items-center gap-1">
-          <button onClick={handleSidebar}>
+          <button onClick={handleSidebar} className="lg:hidden">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-5 w-5"

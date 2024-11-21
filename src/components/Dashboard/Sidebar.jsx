@@ -22,7 +22,7 @@ const Seller = [
 const Sidebar = () => {
   const userData = useUserData();
   const { LogOutUser } = UseAuth();
-  console.log(userData?.role);
+
   const handleLogOut = () => {
     LogOutUser();
   };

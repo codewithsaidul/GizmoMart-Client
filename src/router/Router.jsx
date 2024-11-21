@@ -9,6 +9,8 @@ import Login from "../pages/Authentication/Login";
 import DashboardLayout from "../layout/DashboardLayout";
 import PrivateRoute from "./privateRoute/PrivateRoute";
 import Overview from "../pages/Dashboard/Overview";
+import AdminRoute from "./privateRoute/AdminRoute";
+import AllUser from "../pages/Dashboard/AllUser";
 // import App from "../App";
 
 const router = createBrowserRouter([
@@ -58,6 +60,16 @@ const router = createBrowserRouter([
         element: <Overview />,
       },
 
+      // ============ Admin Route ==================
+      {
+        path: "/dashboard/users",
+        element: (
+          <AdminRoute>
+            <AllUser />
+          </AdminRoute>
+        ),
+      },
+
       // ============ Seller Routes ============
       // {
       //   path: "/dashboard/my-product",
@@ -77,7 +89,6 @@ const router = createBrowserRouter([
       // },
     ],
   },
-
 ]);
 
 export default router;
