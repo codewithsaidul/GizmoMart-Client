@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import UseAuth from "../../hooks/useAuth";
-import UserDropDown from "../Shared/UserDropDown";
+import avatar from "../../assets/avatar.png"
 import PropTypes from "prop-types";
 
 const DashNavbar = ({ handleSidebar }) => {
@@ -31,7 +31,11 @@ const DashNavbar = ({ handleSidebar }) => {
 
         <div>
           {user ? (
-            <UserDropDown />
+            <div className="avatar">
+              <div className="ring-primary ring-offset-base-100 w-8 rounded-full ring ring-offset-2">
+                <img src={`${user?.photoURL ? user.photoURL : avatar}`} />
+              </div>
+            </div>
           ) : (
             <button className="py-2 px-4 border-2 text-base border-primary bg-transparent rounded-xl sm:text-xl font-bold text-primary duration-700 hover:text-white hover:bg-primary hover:duration-700">
               <Link to="/register">Sign Up</Link>
@@ -43,8 +47,7 @@ const DashNavbar = ({ handleSidebar }) => {
   );
 };
 
-
 DashNavbar.propTypes = {
-  handleSidebar: PropTypes.func
+  handleSidebar: PropTypes.func,
 };
 export default DashNavbar;

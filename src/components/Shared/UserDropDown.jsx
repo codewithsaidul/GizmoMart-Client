@@ -1,6 +1,7 @@
 import avatar from "../../assets/avatar.png"
 import { Link } from "react-router-dom";
-import UseAuth from "../../hooks/UseAuth";
+import UseAuth from "../../hooks/useAuth";
+
 
 const UserDropDown = () => {
 

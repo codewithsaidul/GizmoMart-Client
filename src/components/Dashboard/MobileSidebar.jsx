@@ -1,6 +1,8 @@
 import { NavLink } from "react-router-dom";
 import { GrLogout, GrOverview } from "react-icons/gr";
 import { FaHome, FaUser } from "react-icons/fa";
+import { AiOutlineProduct } from "react-icons/ai";
+import { MdOutlineAddShoppingCart } from "react-icons/md";
 import useUserData from "../../hooks/useUserData";
 import UseAuth from "../../hooks/useAuth";
 import PropTypes from "prop-types";
@@ -19,7 +21,15 @@ const Seller = [
 ];
 
 const MobileSidebar = ({ open, setOpen }) => {
+
   const userData = useUserData();
+
+  const { LogOutUser } = UseAuth();
+
+  const handleLogOut = () => {
+    LogOutUser();
+  };
+
   return (
     <div
       className={`bg-gray-400 min-h-screen absolute top-16 ${
@@ -67,7 +77,7 @@ const MobileSidebar = ({ open, setOpen }) => {
           ))}
 
         <li className="text-lg font-semibold btn">
-          <button type="submit" className="flex items-center gap-2">
+          <button onClick={handleLogOut} type="submit" className="flex items-center gap-2">
             <GrLogout size={24} />
             <p>Log Out</p>
           </button>

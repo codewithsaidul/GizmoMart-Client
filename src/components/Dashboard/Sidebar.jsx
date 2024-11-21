@@ -22,13 +22,13 @@ const Seller = [
 const Sidebar = () => {
   const userData = useUserData();
   const { LogOutUser } = UseAuth();
-
+  console.log(userData?.role);
   const handleLogOut = () => {
     LogOutUser();
   };
 
   return (
-    <div className="bg-gray-400 min-h-screen border-r-2 border-slate-700 py-16 px-6">
+    <div className="bg-gray-400 min-h-screen border-r-2 border-slate-700 py-16 px-6 w-full">
       <ul className="flex flex-col gap-4">
         <li className="text-lg font-semibold btn">
           <NavLink to="/" className="flex items-center gap-2">

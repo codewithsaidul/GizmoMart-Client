@@ -8,6 +8,7 @@ import Register from "../pages/Authentication/Register";
 import Login from "../pages/Authentication/Login";
 import DashboardLayout from "../layout/DashboardLayout";
 import PrivateRoute from "./privateRoute/PrivateRoute";
+import Overview from "../pages/Dashboard/Overview";
 // import App from "../App";
 
 const router = createBrowserRouter([
@@ -50,7 +51,33 @@ const router = createBrowserRouter([
         <DashboardLayout />
       </PrivateRoute>
     ),
+    children: [
+      // Add your dashboard routes here
+      {
+        path: "/dashboard/overview",
+        element: <Overview />,
+      },
+
+      // ============ Seller Routes ============
+      // {
+      //   path: "/dashboard/my-product",
+      //   element: (
+      //     <SellerRoute>
+      //       <MyProducts />
+      //     </SellerRoute>
+      //   ),
+      // },
+      // {
+      //   path: "/dashboard/add-product",
+      //   element: (
+      //     <SellerRoute>
+      //       <AddProducts />
+      //     </SellerRoute>
+      //   ),
+      // },
+    ],
   },
+
 ]);
 
 export default router;
