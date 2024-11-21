@@ -1,6 +1,6 @@
 import { Link, NavLink } from "react-router-dom";
-import UseAuth from "../../hooks/UseAuth";
 import UserDropDown from "./UserDropDown";
+import UseAuth from "../../hooks/useAuth";
 
 const Navbar = () => {
   const { user } = UseAuth();
