@@ -2,9 +2,9 @@ import { useForm } from "react-hook-form";
 import Image from "../../assets/loginimage.png";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import GoogleLogin from "./GoogleLogin";
-import UseAuth from "../../hooks/UseAuth";
 import Swal from "sweetalert2";
 import { useEffect } from "react";
+import UseAuth from "../../hooks/useAuth";
 
 const Login = () => {
 

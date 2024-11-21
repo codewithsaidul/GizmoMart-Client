@@ -11,7 +11,7 @@ const useUserData = () => {
 
     useEffect(() => {
         const fetchUserData = async () => {
-           const res = await axios.get(`${import.meta.env.VITE_API_URL}/user/${user.email}`)
+           const res = await axios.get(`${import.meta.env.VITE_API_URL}/user/${user?.email}`)
            setUserData(res.data)
         }
 

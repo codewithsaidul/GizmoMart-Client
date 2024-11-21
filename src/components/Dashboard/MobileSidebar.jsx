@@ -34,7 +34,7 @@ const MobileSidebar = ({ open, setOpen }) => {
     <div
       className={`bg-gray-400 min-h-screen absolute top-16 ${
         open ? "left-0 duration-700" : "-left-full duration-700"
-      } border-r-2 border-slate-700 py-16 px-6`}
+      } border-r-2 border-slate-700 py-16 px-6 z-50`}
     >
       <ul className="flex flex-col gap-4">
         <li
