@@ -1,7 +1,12 @@
 
 import { Link, NavLink } from "react-router-dom";
+import UseAuth from "../../hooks/UseAuth";
+import UserDropDown from "./UserDropDown";
 
 const Navbar = () => {
+
+  const { user } = UseAuth()
+
   return (
     <header className="bg-base-100 border-b-2 py-2">
      <div className="navbar px-4 sm:px-8 md:px-12 lg:px-20 mx-auto">
@@ -144,10 +149,16 @@ const Navbar = () => {
           </div>
     
           <div className="navbar-end">
-            <button className="py-2 px-4 border-2 text-base border-primary bg-transparent rounded-xl sm:text-xl font-bold text-primary duration-700 hover:text-white hover:bg-primary hover:duration-700">
-                <Link to="/register">Sign Up</Link>
-            </button>
+            
           </div>
+
+          <div className="navbar-end">
+          {user ? (
+            <UserDropDown />
+          ) : <button className="py-2 px-4 border-2 text-base border-primary bg-transparent rounded-xl sm:text-xl font-bold text-primary duration-700 hover:text-white hover:bg-primary hover:duration-700">
+          <Link to="/register">Sign Up</Link>
+      </button>}
+        </div>
      </div>
     </header>
   );
