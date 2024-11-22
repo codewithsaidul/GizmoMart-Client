@@ -137,7 +137,7 @@ const AddProducts = () => {
             </label>
             <input
               className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary"
-              type="number"
+              type="text"
               id="product-name"
               placeholder="Enter product Price"
               {...register("productPrice", {
@@ -229,10 +229,6 @@ const AddProducts = () => {
                 minLength: {
                   value: 50,
                   message: "Description must be at least 50 characters long",
-                },
-                maxLength: {
-                  value: 500,
-                  message: "Description must be at most 500 characters long",
                 },
               })}
             />

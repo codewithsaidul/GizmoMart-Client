@@ -10,7 +10,7 @@ const Seller = [
   {
     name: "All Products",
     icon: <AiOutlineProduct />,
-    path: "/dashboard/all-products",
+    path: "/dashboard/my-products",
   },
   {
     name: "Add Product",
