@@ -1,15 +1,18 @@
 import { FaEdit } from "react-icons/fa";
 import { MdDeleteForever } from "react-icons/md";
 import PropTypes from "prop-types";
+import ProductDeleteModal from "./ProductDeleteModal";
+import { useState } from "react";
 
-const MyProduct = ( { products }) => {
+const MyProduct = ({ products, refetch }) => {
+  const [showModal, setShowModal] = useState(false);
 
   return (
     <>
       {products.map((product) => (
         <div
-          key={product.id}
-          className="border border-primary p-6 rounded-lg min-h-60"
+          key={product._id}
+          className="border border-primary p-6 rounded-lg min-h-60 relative"
         >
           <div className="flex flex-col justify-between gap-5">
             <div>
@@ -32,7 +35,7 @@ const MyProduct = ( { products }) => {
                 </p>
                 <div className="flex justify-between items-center">
                   <span className="text-xl font-bold text-primary">
-                    ${product.productPrice}
+                    ${parseFloat(product.productPrice)}
                   </span>
                   <span className="text-xl font-bold text-primary">
                     In Stock: {product.productQuantity}
@@ -43,14 +46,28 @@ const MyProduct = ( { products }) => {
 
             {/* Wishlist Button */}
             <div className="mt-4 flex items-center gap-2">
-              <button className="flex items-center gap-1 justify-center py-2 px-4 bg-blue-600 text-white rounded-md text-2xl w-full">
-                <FaEdit size={24} />
+              <button className="flex items-center gap-1 justify-center py-2 px-4 bg-blue-600 text-white rounded-md text-xl w-full">
+                <FaEdit size={20} />
                 <span>Edit</span>
               </button>
-              <button className="flex items-center gap-1 justify-center py-2 px-4 bg-red-600 text-white rounded-md text-2xl w-full">
-                <MdDeleteForever size={24} />
+              <button
+                onClick={() => setShowModal(!showModal)}
+                className="flex items-center gap-1 justify-center py-2 px-4 bg-red-600 text-white rounded-md text-xl w-full"
+              >
+                <MdDeleteForever size={20} />
                 <span>Delete</span>
               </button>
+
+              {/*  ================ Open Modal for Deletation ============== */}
+              {showModal && (
+                <div className="absolute top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 bg-white shadow-[0px_4px_10px_rgba(0,0,0,0.5)] py-6 px-10 w-[90%] rounded-lg">
+                  <ProductDeleteModal
+                    setShowModal={setShowModal}
+                    refetch={refetch}
+                    userId={product._id}
+                  />
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -59,18 +76,9 @@ const MyProduct = ( { products }) => {
   );
 };
 
-
 MyProduct.propTypes = {
-  products: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.number.isRequired,
-      title: PropTypes.string.isRequired,
-      brand: PropTypes.string.isRequired,
-      category: PropTypes.string.isRequired,
-      price: PropTypes.number.isRequired,
-      image: PropTypes.string.isRequired,
-    })
-  ).isRequired,
-}
+  products: PropTypes.array.isRequired, // Product array from the GraphQL API
+  refetch: PropTypes.func.isRequired,
+};
 
 export default MyProduct;

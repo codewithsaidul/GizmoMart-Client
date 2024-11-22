@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 
-const Button = ({ title, stl }) => {
+const Button = ({ title, stl,  }) => {
   return (
     <button className={`btn text-white text-xl ${stl}`}>{title}</button>
   )
