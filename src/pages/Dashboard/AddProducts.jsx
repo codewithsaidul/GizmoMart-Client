@@ -1,4 +1,7 @@
 import { useForm } from "react-hook-form";
+import useUserData from "../../hooks/useUserData";
+import Swal from "sweetalert2";
+import axios from "axios";
 
 const AddProducts = () => {
   const {
@@ -8,7 +11,10 @@ const AddProducts = () => {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => {
+  const userData = useUserData();
+
+  //   Handle Add Products
+  const onSubmit = async (data) => {
     const productName = data.productName;
     const productImage = data.productImage;
     const productPrice = data.productPrice;
@@ -16,12 +22,63 @@ const AddProducts = () => {
     const productCategory = data.productCategory;
     const productBrand = data.productBrand;
     const productDescription = data.productDescription;
+    const userEmail = userData?.email;
+    const userStatus = userData?.status;
 
+    // Create a Object for storing the product information
     const product = {
-        productName, productImage, productPrice, productQuantity, productCategory, productBrand, productDescription
+      userEmail,
+      userStatus,
+      productName,
+      productImage,
+      productPrice,
+      productQuantity,
+      productCategory,
+      productBrand,
+      productDescription,
+    };
+
+    // Checking Seller Status Approved or Pending
+    if (userData?.status === "Pending") {
+      return Swal.fire({
+        position: "top-center",
+        icon: "warning",
+        title:
+          "Your account is pending. Please wait until your account is approved.",
+        showConfirmButton: true,
+      });
     }
-    reset()
-    console.log(product);
+
+    // Add product to the database
+    try {
+      if (userData?.status === "Approved") {
+        // Add product to the database
+        // Add product code here
+        const { data } = await axios.post(
+          `${import.meta.env.VITE_API_URL}/prouct`,
+          product
+        );
+        if (data.insertedId) {
+          Swal.fire({
+            position: "top-center",
+            icon: "success",
+            title: "Product Added Successfully",
+            showConfirmButton: true,
+            timer: 1500,
+          });
+        }
+      }
+    } catch {
+      Swal.fire({
+        position: "top-center",
+        icon: "error",
+        title: "Product Added Failed!",
+        showConfirmButton: true,
+        timer: 1500,
+      });
+    }
+
+    reset();
   };
 
   return (
@@ -83,14 +140,21 @@ const AddProducts = () => {
               type="number"
               id="product-name"
               placeholder="Enter product Price"
-              {...register("productPrice", { required: true })}
+              {...register("productPrice", {
+                required: true,
+                min: 1,
+              })}
             />
-            {errors.price && (
-              <p className="text-sm text-red-600">Product Price is required</p>
+            {errors?.productPrice && (
+              <p className="text-sm text-red-600">
+                {errors?.productPrice?.message.type === "required"
+                  ? "Product Price is required"
+                  : "Price must be greater than  to 0"}
+              </p>
             )}
           </div>
 
-          {/* Product Price */}
+          {/* Product Quantity */}
           <div className="col-span-12 md:col-span-6">
             <label className="block text-sm font-medium text-gray-700">
               Product Quantity
@@ -100,10 +164,17 @@ const AddProducts = () => {
               type="number"
               id="product-name"
               placeholder="Enter product Quantity"
-              {...register("productQuantity", { required: true })}
+              {...register("productQuantity", {
+                required: true,
+                min: 1,
+              })}
             />
             {errors.productQuantity && (
-              <p className="text-sm text-red-600">Product Quantity is required</p>
+              <p className="text-sm text-red-600">
+                {errors?.productQuantity?.message.type === "required"
+                  ? "Product Quantity is required"
+                  : "Price must be greater than or Equal  to 0"}
+              </p>
             )}
           </div>
 
