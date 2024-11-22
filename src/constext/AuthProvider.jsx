@@ -13,6 +13,7 @@ import app from "../firebase/firebase.config";
 
 
 
+
 // eslint-disable-next-line react-refresh/only-export-components
 export const AuthContext = createContext(null);
 
@@ -54,6 +55,20 @@ const AuthProvider = ({ children }) => {
     const unSubscribe = onAuthStateChanged(Auth, (currentUser) => {
       setUser(currentUser);
       setLoading(false);
+      // if (currentUser) {
+      //   axios.post(`${import.meta.env.VITE_API_URL}/authentication`, {
+      //     email: currentUser.email,
+      //   }).then(data => {
+      //     if(data.data) {
+      //       localStorage.setItem('access-token', data?.data?.token);
+      //       setLoading(false);
+      //     }
+      //   })
+      // } else {
+      //   localStorage.removeItem('access-token');
+      //   setLoading(false);
+      //   setUser(null);
+      // }
     });
 
     return () => {

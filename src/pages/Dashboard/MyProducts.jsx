@@ -25,9 +25,10 @@ const MyProducts = () => {
     },
   });
 
+
+
   // Get products data length
   const productCount = products.length;
-  console.log(productCount);
 
   //   Showing Loading Screen if Data Loading
   if (isLoading) return <Loading />;

@@ -3,6 +3,7 @@ import { MdDeleteForever } from "react-icons/md";
 import PropTypes from "prop-types";
 import ProductDeleteModal from "./ProductDeleteModal";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 const MyProduct = ({ products, refetch }) => {
   const [showModal, setShowModal] = useState(false);
@@ -46,10 +47,12 @@ const MyProduct = ({ products, refetch }) => {
 
             {/* Wishlist Button */}
             <div className="mt-4 flex items-center gap-2">
-              <button className="flex items-center gap-1 justify-center py-2 px-4 bg-blue-600 text-white rounded-md text-xl w-full">
-                <FaEdit size={20} />
-                <span>Edit</span>
-              </button>
+              <Link to={`/dashboard/update-product/${product._id}`}>
+                <button  className="flex items-center gap-1 justify-center py-2 px-4 bg-blue-600 text-white rounded-md text-xl w-full">
+                  <FaEdit size={20} />
+                  <span>Edit</span>
+                </button>
+              </Link>
               <button
                 onClick={() => setShowModal(!showModal)}
                 className="flex items-center gap-1 justify-center py-2 px-4 bg-red-600 text-white rounded-md text-xl w-full"

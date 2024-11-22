@@ -2,8 +2,9 @@ import { useForm } from "react-hook-form";
 import useUserData from "../../hooks/useUserData";
 import Swal from "sweetalert2";
 import axios from "axios";
+import { useLoaderData } from "react-router-dom";
 
-const AddProducts = () => {
+const UpdateProduct = () => {
   const {
     register,
     handleSubmit,
@@ -12,6 +13,18 @@ const AddProducts = () => {
   } = useForm();
 
   const userData = useUserData();
+
+  const {
+    _id,
+    productName,
+    productImage,
+    productCategory,
+    productBrand,
+    productPrice,
+    productQuantity,
+    productDescription
+  } = useLoaderData();
+
 
   //   Handle Add Products
   const onSubmit = async (data) => {
@@ -22,13 +35,13 @@ const AddProducts = () => {
     const productCategory = data.productCategory;
     const productBrand = data.productBrand;
     const productDescription = data.productDescription;
-    const sellerEmail = userData?.email;
-    const sellerStatus = userData?.status;
+    const userEmail = userData?.email;
+    const userStatus = userData?.status;
 
     // Create a Object for storing the product information
     const product = {
-      sellerEmail,
-      sellerStatus,
+      userEmail,
+      userStatus,
       productName,
       productImage,
       productPrice,
@@ -38,53 +51,16 @@ const AddProducts = () => {
       productDescription,
     };
 
-    // Checking Seller Status Approved or Pending
-    if (userData?.status === "Pending") {
-      return Swal.fire({
-        position: "top-center",
-        icon: "warning",
-        title:
-          "Your account is pending. Please wait until your account is approved.",
-        showConfirmButton: true,
-      });
-    }
+    console.log(product);
 
-    // Add product to the database
-    try {
-      if (userData?.status === "Approved") {
-        // Add product to the database
-        // Add product code here
-        const { data } = await axios.post(
-          `${import.meta.env.VITE_API_URL}/prouct`,
-          product
-        );
-        if (data.insertedId) {
-          Swal.fire({
-            position: "top-center",
-            icon: "success",
-            title: "Product Added Successfully",
-            showConfirmButton: true,
-            timer: 1500,
-          });
-        }
-      }
-    } catch {
-      Swal.fire({
-        position: "top-center",
-        icon: "error",
-        title: "Product Added Failed!",
-        showConfirmButton: true,
-        timer: 1500,
-      });
-    }
+    
 
-    reset();
   };
 
   return (
     <div className="my-5">
       <h2 className="text-2xl text-primary font-bold mb-10 text-center">
-        Add New Product
+        Update Product
       </h2>
 
       {/* Add Product Form Container */}
@@ -103,7 +79,7 @@ const AddProducts = () => {
               className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary"
               type="text"
               id="product-name"
-              placeholder="Enter product name"
+              defaultValue={productName}
               {...register("productName", { required: true })}
             />
             {errors.productName && (
@@ -120,10 +96,10 @@ const AddProducts = () => {
               className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary"
               type="text"
               id="product-name"
-              placeholder="Enter product Image URL"
+              defaultValue={productImage}
               {...register("productImage", { required: true })}
             />
-            {errors.productImage && (
+            {errors.imageUrl && (
               <p className="text-sm text-red-600">
                 Product Image URL is required
               </p>
@@ -139,7 +115,7 @@ const AddProducts = () => {
               className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary"
               type="text"
               id="product-name"
-              placeholder="Enter product Price"
+              defaultValue={productPrice}
               {...register("productPrice", {
                 required: true,
                 min: 1,
@@ -163,7 +139,7 @@ const AddProducts = () => {
               className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary"
               type="number"
               id="product-name"
-              placeholder="Enter product Quantity"
+              defaultValue={productQuantity}
               {...register("productQuantity", {
                 required: true,
                 min: 1,
@@ -187,10 +163,10 @@ const AddProducts = () => {
               className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary"
               type="text"
               id="product-name"
-              placeholder="Enter product Category"
+              defaultValue={productCategory}
               {...register("productCategory", { required: true })}
             />
-            {errors.productCategory && (
+            {errors.category && (
               <p className="text-sm text-red-600">
                 Product Category is required
               </p>
@@ -206,10 +182,10 @@ const AddProducts = () => {
               className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary"
               type="text"
               id="product-name"
-              placeholder="Enter product Brand Name"
+              defaultValue={productBrand}
               {...register("productBrand", { required: true })}
             />
-            {errors.productBrand && (
+            {errors.brand && (
               <p className="text-sm text-red-600">Product Brand is required</p>
             )}
           </div>
@@ -223,7 +199,7 @@ const AddProducts = () => {
               className="mt-1 block w-full h-40 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary focus:border-primary"
               type="text"
               id="product-name"
-              placeholder="Enter product Descipton"
+              defaultValue={productDescription}
               {...register("productDescription", {
                 required: true,
                 minLength: {
@@ -232,11 +208,11 @@ const AddProducts = () => {
                 },
               })}
             />
-            {errors.productDescription && (
+            {errors.description && (
               <p className="text-sm text-red-600">
-                {errors.productDescription.type === "required"
+                {errors.description.type === "required"
                   ? "Product Description is required"
-                  : errors.productDescription.message}
+                  : errors.description.message}
               </p>
             )}
           </div>
@@ -246,7 +222,7 @@ const AddProducts = () => {
             <input
               type="submit"
               className="w-full px-4 py-2 bg-primary text-white rounded-md shadow-sm hover:bg-primary-dark"
-              value="Add Product"
+              value="Update Product"
             />
           </div>
         </form>
@@ -255,4 +231,4 @@ const AddProducts = () => {
   );
 };
 
-export default AddProducts;
+export default UpdateProduct;

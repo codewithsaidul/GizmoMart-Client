@@ -14,6 +14,7 @@ import AllUser from "../pages/Dashboard/AllUser";
 import SellerRoute from "./privateRoute/SellerRoute";
 import AddProducts from "../pages/Dashboard/AddProducts";
 import MyProducts from "../pages/Dashboard/MyProducts";
+import UpdateProduct from "../pages/Dashboard/UpdateProduct";
 // import App from "../App";
 
 const router = createBrowserRouter([
@@ -89,6 +90,15 @@ const router = createBrowserRouter([
             <AddProducts />
           </SellerRoute>
         ),
+      },
+      {
+        path: "/dashboard/update-product/:id",
+        element: (
+          <SellerRoute>
+            <UpdateProduct />
+          </SellerRoute>
+        ),
+        loader: ( {params} ) => fetch(`${import.meta.env.VITE_API_URL}/products/${params.id}`)
       },
     ],
   },
