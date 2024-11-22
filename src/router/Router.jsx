@@ -98,7 +98,7 @@ const router = createBrowserRouter([
             <UpdateProduct />
           </SellerRoute>
         ),
-        loader: ( {params} ) => fetch(`${import.meta.env.VITE_API_URL}/products/${params.id}`)
+        loader: ( {params} ) => fetch(`${import.meta.env.VITE_API_URL}/product/${params.id}`)
       },
     ],
   },

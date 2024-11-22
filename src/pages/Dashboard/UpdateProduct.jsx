@@ -1,19 +1,21 @@
 import { useForm } from "react-hook-form";
-import useUserData from "../../hooks/useUserData";
 import Swal from "sweetalert2";
 import axios from "axios";
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData, useNavigate } from "react-router-dom";
+import UseAuth from "../../hooks/useAuth";
 
 const UpdateProduct = () => {
   const {
     register,
     handleSubmit,
-    reset,
     formState: { errors },
   } = useForm();
 
-  const userData = useUserData();
 
+  const navigate = useNavigate();
+  const { user } = UseAuth()
+
+// Get Product Data from db using Id
   const {
     _id,
     productName,
@@ -24,8 +26,9 @@ const UpdateProduct = () => {
     productQuantity,
     productDescription
   } = useLoaderData();
+  const userId = _id;
 
-
+  console.log(typeof userId)
   //   Handle Add Products
   const onSubmit = async (data) => {
     const productName = data.productName;
@@ -35,13 +38,11 @@ const UpdateProduct = () => {
     const productCategory = data.productCategory;
     const productBrand = data.productBrand;
     const productDescription = data.productDescription;
-    const userEmail = userData?.email;
-    const userStatus = userData?.status;
+    const sellerEmail = user?.email;
+    const sellerStatus = user?.status;
 
     // Create a Object for storing the product information
     const product = {
-      userEmail,
-      userStatus,
       productName,
       productImage,
       productPrice,
@@ -49,11 +50,33 @@ const UpdateProduct = () => {
       productCategory,
       productBrand,
       productDescription,
+      sellerEmail,
+      sellerStatus
     };
 
-    console.log(product);
 
-    
+    try {
+        const { data } = await axios.patch(`${import.meta.env.VITE_API_URL}/products/update/${userId}`, product)
+        
+        if (data.modifiedCount > 0) {
+            navigate('/dashboard/my-products')
+            Swal.fire({
+              position: "top-center",
+              icon: "success",
+              title: "Product Updated Successfully",
+              showConfirmButton: false,
+              timer: 1500,
+            });
+        }
+    } catch {
+        Swal.fire({
+            position: "top-center",
+            icon: "success",
+            title: "Product Update Failed!",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+    }
 
   };
 

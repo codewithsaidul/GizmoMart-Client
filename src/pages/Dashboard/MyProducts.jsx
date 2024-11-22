@@ -25,7 +25,8 @@ const MyProducts = () => {
     },
   });
 
-
+  console.log(sellerEmail);
+  console.log(products);
 
   // Get products data length
   const productCount = products.length;
