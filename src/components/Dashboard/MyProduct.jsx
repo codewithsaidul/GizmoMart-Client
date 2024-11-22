@@ -1,9 +1,9 @@
 import { FaEdit } from "react-icons/fa";
-import { products } from "../../data/Data";
 import { MdDeleteForever } from "react-icons/md";
+import PropTypes from "prop-types";
 
+const MyProduct = ( { products }) => {
 
-const MyProduct = () => {
   return (
     <>
       {products.map((product) => (
@@ -15,24 +15,29 @@ const MyProduct = () => {
             <div>
               <figure className="flex justify-center">
                 <img
-                  src={product.image}
-                  alt={product.name}
+                  src={product.productImage}
+                  alt={product.productName}
                   className="w-60 h-60 rounded-md"
                 />
               </figure>
               <div className="flex flex-col space-y-3 mt-6">
                 <h3 className="text-xl font-bold text-slate-700">
-                  {product.title}
+                  {product.productName}
                 </h3>
                 <p className="text-base font-semibold">
-                  Brand: <span>{product.brand}</span>
+                  Brand: <span>{product.productBrand}</span>
                 </p>
                 <p className="text-base font-semibold">
-                  Category: <span>{product.category}</span>
+                  Category: <span>{product.productCategory}</span>
                 </p>
-                <span className="text-xl font-bold text-primary">
-                  ${product.price.toFixed(2)}
-                </span>
+                <div className="flex justify-between items-center">
+                  <span className="text-xl font-bold text-primary">
+                    ${product.productPrice}
+                  </span>
+                  <span className="text-xl font-bold text-primary">
+                    In Stock: {product.productQuantity}
+                  </span>
+                </div>
               </div>
             </div>
 
@@ -53,5 +58,19 @@ const MyProduct = () => {
     </>
   );
 };
+
+
+MyProduct.propTypes = {
+  products: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      title: PropTypes.string.isRequired,
+      brand: PropTypes.string.isRequired,
+      category: PropTypes.string.isRequired,
+      price: PropTypes.number.isRequired,
+      image: PropTypes.string.isRequired,
+    })
+  ).isRequired,
+}
 
 export default MyProduct;
