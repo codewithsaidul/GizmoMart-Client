@@ -1,10 +1,11 @@
 import { Link, NavLink } from "react-router-dom";
 import UserDropDown from "./UserDropDown";
 import UseAuth from "../../hooks/useAuth";
-import { FaCartPlus } from "react-icons/fa";
+
 
 const Navbar = () => {
   const { user } = UseAuth();
+
 
   return (
     <header className="bg-base-100 border-b-2 py-2">
@@ -150,13 +151,6 @@ const Navbar = () => {
         </div>
 
         <div className="navbar-end">
-          <div className="mr-6">
-            <Link to="/carts" className="relative">
-              <FaCartPlus size={24} />
-
-              <span className="absolute -top-3 -right-2 text-primary text-lg font-bold">0</span>
-            </Link>
-          </div>
           {user ? (
             <UserDropDown />
           ) : (
