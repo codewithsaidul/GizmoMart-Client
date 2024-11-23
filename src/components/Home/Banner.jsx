@@ -1,4 +1,5 @@
 import Button from "../Shared/Button";
+import { Link } from "react-router-dom"
 
 const Banner = () => {
   return (
@@ -21,7 +22,7 @@ const Banner = () => {
             </p>
             
             {/* ======================== Button Component ================================== */}
-            <Button title="Star Shopping" stl={"bg-primary border-primary hover:bg-transparent text-white text-xl"} />
+            <Link to="/products"><Button title="Star Shopping" stl={"bg-primary border-primary hover:bg-transparent text-white text-xl"} /></Link>
           </div>
         </div>
       </div>

@@ -7,6 +7,7 @@ import UseAuth from "../../hooks/useAuth";
 
 const MyProducts = () => {
   const { user } = UseAuth();
+  const token = localStorage.getItem('access-token')
   const sellerEmail = user?.email;
 
   // Fetching The Product Data With Seller Email
@@ -19,14 +20,16 @@ const MyProducts = () => {
     queryFn: async () => {
       if (!sellerEmail) return [];
       const { data } = await axios.get(
-        `${import.meta.env.VITE_API_URL}/products/${sellerEmail}`
+        `${import.meta.env.VITE_API_URL}/products/${sellerEmail}`, {
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
+        }
       );
       return data;
     },
   });
 
-  console.log(sellerEmail);
-  console.log(products);
 
   // Get products data length
   const productCount = products.length;

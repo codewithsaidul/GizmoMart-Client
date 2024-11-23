@@ -1,13 +1,14 @@
 import { Link, NavLink } from "react-router-dom";
 import UserDropDown from "./UserDropDown";
 import UseAuth from "../../hooks/useAuth";
+import { FaCartPlus } from "react-icons/fa";
 
 const Navbar = () => {
   const { user } = UseAuth();
 
   return (
     <header className="bg-base-100 border-b-2 py-2">
-      <div className="navbar px-4 sm:px-8 md:px-12 lg:px-20 mx-auto">
+      <div className="navbar px-4 sm:px-6 md:px-8 lg:px-16 mx-auto">
         <div className="navbar-start">
           <div className="dropdown">
             <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -27,7 +28,7 @@ const Navbar = () => {
               </svg>
             </div>
 
-            {/* ============ Mobile Navigation */}
+            {/* ============ Mobile Navigation ========================== */}
             <ul
               tabIndex={0}
               className="flex flex-col gap-6 items-center justify-center dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 py-8 px-2 shadow"
@@ -91,7 +92,7 @@ const Navbar = () => {
           </a>
         </div>
 
-        {/* =========== Desktop Navigation */}
+        {/* =========== Desktop Navigation ========================== */}
         <div className="navbar-center hidden lg:flex">
           <ul className="flex items-center gap-10">
             <li>
@@ -149,6 +150,13 @@ const Navbar = () => {
         </div>
 
         <div className="navbar-end">
+          <div className="mr-6">
+            <Link to="/carts" className="relative">
+              <FaCartPlus size={24} />
+
+              <span className="absolute -top-3 -right-2 text-primary text-lg font-bold">0</span>
+            </Link>
+          </div>
           {user ? (
             <UserDropDown />
           ) : (

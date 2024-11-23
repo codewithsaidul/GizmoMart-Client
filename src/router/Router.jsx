@@ -15,6 +15,9 @@ import AddProducts from "../pages/Dashboard/AddProducts";
 import MyProducts from "../pages/Dashboard/MyProducts";
 import UpdateProduct from "../pages/Dashboard/UpdateProduct";
 import Products from "../pages/Products";
+import Carts from "../pages/Carts";
+import Wishlists from "../pages/Wishlists";
+import ProductDetails from "../pages/ProductDetails";
 // import App from "../App";
 
 const router = createBrowserRouter([
@@ -33,6 +36,15 @@ const router = createBrowserRouter([
       {
         path: "/products",
         element: <Products />,
+      },
+      {
+        path: "/productDetails/:id",
+        element: (
+          <PrivateRoute>
+            <ProductDetails />
+          </PrivateRoute>
+        ),
+        loader: ( { params } ) => fetch(`${import.meta.env.VITE_API_URL}/product/${params.id}`)
       },
       {
         path: "/contact",
@@ -62,6 +74,16 @@ const router = createBrowserRouter([
       {
         path: "/dashboard/overview",
         element: <Overview />,
+      },
+
+      // ============ User Route ==================
+      {
+        path: "/dashboard/carts",
+        element: <Carts />,
+      },
+      {
+        path: "/dashboard/wishlists",
+        element: <Wishlists />,
       },
 
       // ============ Admin Route ==================
@@ -98,7 +120,8 @@ const router = createBrowserRouter([
             <UpdateProduct />
           </SellerRoute>
         ),
-        loader: ( {params} ) => fetch(`${import.meta.env.VITE_API_URL}/product/${params.id}`)
+        loader: ({ params }) =>
+          fetch(`${import.meta.env.VITE_API_URL}/product/${params.id}`),
       },
     ],
   },

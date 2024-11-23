@@ -10,6 +10,7 @@ import {
     signOut,
 } from "firebase/auth";
 import app from "../firebase/firebase.config";
+import axios from "axios";
 
 
 
@@ -54,21 +55,21 @@ const AuthProvider = ({ children }) => {
   useEffect(() => {
     const unSubscribe = onAuthStateChanged(Auth, (currentUser) => {
       setUser(currentUser);
-      setLoading(false);
-      // if (currentUser) {
-      //   axios.post(`${import.meta.env.VITE_API_URL}/authentication`, {
-      //     email: currentUser.email,
-      //   }).then(data => {
-      //     if(data.data) {
-      //       localStorage.setItem('access-token', data?.data?.token);
-      //       setLoading(false);
-      //     }
-      //   })
-      // } else {
-      //   localStorage.removeItem('access-token');
-      //   setLoading(false);
-      //   setUser(null);
-      // }
+      // setLoading(false);
+      if (currentUser) {
+        axios.post(`${import.meta.env.VITE_API_URL}/authentication`, {
+          email: currentUser.email,
+        }).then(data => {
+          if(data.data) {
+            localStorage.setItem('access-token', data?.data?.token);
+            setLoading(false);
+          }
+        })
+      } else {
+        localStorage.removeItem('access-token');
+        setLoading(false);
+        setUser(null);
+      }
     });
 
     return () => {
