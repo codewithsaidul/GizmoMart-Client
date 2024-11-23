@@ -1,30 +1,18 @@
-import { useQuery } from "@tanstack/react-query";
-
 import Button from "../Shared/Button";
-import axios from "axios";
-import Loading from "../Shared/Loading";
+import PropTypes from "prop-types";
 
-const ProductData = () => {
 
-  // const maxLength = 18;
-  const { data: products = [], isLoading} = useQuery({
-    queryKey: "products",
-    queryFn: async () => {
-      const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/products`);
-      return data;
-    }
-  })
+const ProductCard = ( { products } ) => {
 
-  // Showing Loading Screen if data not found
-  if (isLoading) return <Loading />
+
 
   return (
     <div >
       {/* ============== Featured Product Container ===================== */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {products.slice(0, 6).map((product) => (
+        {products.map((product) => (
           <div
-            key={product.id}
+            key={product._id}
             className="border border-primary p-6 rounded-lg min-h-60"
           >
             <div className="flex flex-col justify-between gap-5">
@@ -69,4 +57,18 @@ const ProductData = () => {
   );
 };
 
-export default ProductData;
+
+ProductCard.propTypes = {
+  products: PropTypes.arrayOf(
+    PropTypes.shape({
+      _id: PropTypes.number.isRequired,
+      productImage: PropTypes.string.isRequired,
+      productName: PropTypes.string.isRequired,
+      productBrand: PropTypes.string.isRequired,
+      productCategory: PropTypes.string.isRequired,
+      productPrice: PropTypes.string.isRequired,
+    })
+  ),
+}
+
+export default ProductCard;

@@ -3,7 +3,6 @@ import MainLaout from "../layout/MainLaout";
 import Home from "../pages/Home";
 import About from "../pages/About";
 import Contact from "../pages/Contact";
-import Product from "../pages/Product";
 import Register from "../pages/Authentication/Register";
 import Login from "../pages/Authentication/Login";
 import DashboardLayout from "../layout/DashboardLayout";
@@ -15,6 +14,7 @@ import SellerRoute from "./privateRoute/SellerRoute";
 import AddProducts from "../pages/Dashboard/AddProducts";
 import MyProducts from "../pages/Dashboard/MyProducts";
 import UpdateProduct from "../pages/Dashboard/UpdateProduct";
+import Products from "../pages/Products";
 // import App from "../App";
 
 const router = createBrowserRouter([
@@ -32,7 +32,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/products",
-        element: <Product />,
+        element: <Products />,
       },
       {
         path: "/contact",

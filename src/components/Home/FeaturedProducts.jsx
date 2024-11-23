@@ -9,7 +9,7 @@ const FeaturedProducts = () => {
     queryKey: "products",
     queryFn: async () => {
       const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/products`);
-      return data;
+      return data.products;
     }
   })
 
