@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import UseAuth from "./useAuth";
+import useAuth from "./useAuth";
 import axios from "axios";
 
 const useUserData = () => {
-  const { user, loading } = UseAuth();
+  const { user, loading } = useAuth();
   const [userData, setUserData] = useState(null);
   const token = localStorage.getItem('access-token')
 

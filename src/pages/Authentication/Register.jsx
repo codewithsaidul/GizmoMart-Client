@@ -8,7 +8,7 @@ import Swal from "sweetalert2";
 import { useEffect } from "react";
 
 const Register = () => {
-  const { user, setUser, CreateUser } = UseAuth();
+  const { user, setUser, CreateUser } = useAuth();
 
   const {
     register,

@@ -35,7 +35,7 @@ const Buyer = [
 const MobileSidebar = ({ open, setOpen }) => {
   const userData = useUserData();
 
-  const { LogOutUser } = UseAuth();
+  const { LogOutUser } = useAuth();
 
   const handleLogOut = () => {
     LogOutUser();

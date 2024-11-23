@@ -8,7 +8,7 @@ import useAuth from "../../hooks/useAuth";
 
 const Login = () => {
 
-  const { user, LoginUser } = UseAuth();
+  const { user, LoginUser } = useAuth();
 
   const navigate = useNavigate();
   const location = useLocation();

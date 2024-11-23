@@ -6,7 +6,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 
 const GoogleLogin = () => {
-  const { user, setUser, LoginWithGoogle } = UseAuth();
+  const { user, setUser, LoginWithGoogle } = useAuth();
 
   const navigate = useNavigate();
   const location = useLocation();

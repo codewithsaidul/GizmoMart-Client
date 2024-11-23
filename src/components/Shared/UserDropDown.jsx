@@ -5,7 +5,7 @@ import useAuth from "../../hooks/useAuth";
 
 const UserDropDown = () => {
 
-    const { user, LogOutUser } = UseAuth();
+    const { user, LogOutUser } = useAuth();
 
     const handleLogOut = () => {
         LogOutUser();
