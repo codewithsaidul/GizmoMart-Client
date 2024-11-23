@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import UseAuth from "../../hooks/useAuth";
-import avatar from "../../assets/avatar.png"
+import avatar from "../../assets/avatar.png";
 import PropTypes from "prop-types";
 
 const DashNavbar = ({ handleSidebar }) => {
@@ -26,7 +26,9 @@ const DashNavbar = ({ handleSidebar }) => {
               />
             </svg>
           </button>
-          <h1 className="text-2xl font-bold ml-4">GizmoMart</h1>
+          <Link to="/dashboard/overview">
+            <h1 className="text-2xl font-bold ml-4 text-primary">GizmoMart</h1>
+          </Link>
         </div>
 
         <div>

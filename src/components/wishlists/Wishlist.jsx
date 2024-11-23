@@ -5,8 +5,10 @@ import Swal from "sweetalert2";
 
 const Wishlist = ({ product, refetch }) => {
   const userData = useUserData();
+  const token = localStorage.getItem('access-token')
 
-  const handleRemoveCartData = async (id) => {
+
+  const handleRemoveWishlistData = async (id) => {
     // refetch(); // Refetch the data to remove the removed product from the cart
     const productId = id;
     const userEmail = userData.email;
@@ -17,6 +19,11 @@ const Wishlist = ({ product, refetch }) => {
         {
           userEmail: userEmail,
           productId: productId,
+        },
+        {
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
         }
       );
 
@@ -76,7 +83,7 @@ const Wishlist = ({ product, refetch }) => {
         {/* Wishlist Button */}
         <div className="justify-end mt-4">
           <button
-            onClick={() => handleRemoveCartData(product._id)}
+            onClick={() => handleRemoveWishlistData(product._id)}
             className={
               "bg-primary border-primary duration-1000 hover:bg-transparent hover:border-primary hover:text-primary hover:duration-1000 btn w-full text-white"
             }

@@ -9,7 +9,7 @@ const ProductSidebar = ({
   handleReset,
 }) => {
   return (
-    <div className="bg-slate-300 h-fit lg:sticky lg:top-6 lg:min-h-screen p-6 rounded-md">
+    <div className="bg-slate-300 h-full lg:sticky lg:top-6 lg:min-h-screen p-6 rounded-md">
       <div className="flex items-center gap-2 border-b-2 border-black pb-4">
         <span>
           <FaFilter size={24} />

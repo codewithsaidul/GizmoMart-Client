@@ -5,6 +5,7 @@ import Swal from "sweetalert2";
 
 const Cart = ({ product, refetch }) => {
   const userData = useUserData();
+  const token = localStorage.getItem('access-token')
 
   const handleRemoveCartData = async (id) => {
     // refetch(); // Refetch the data to remove the removed product from the cart
@@ -17,6 +18,11 @@ const Cart = ({ product, refetch }) => {
         {
           userEmail: userEmail,
           productId: productId,
+        },
+        {
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
         }
       );
 

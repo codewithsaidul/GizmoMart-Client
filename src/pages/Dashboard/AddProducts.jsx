@@ -12,6 +12,7 @@ const AddProducts = () => {
   } = useForm();
 
   const userData = useUserData();
+  const token = localStorage.getItem("access-token");
 
   //   Handle Add Products
   const onSubmit = async (data) => {
@@ -56,7 +57,12 @@ const AddProducts = () => {
         // Add product code here
         const { data } = await axios.post(
           `${import.meta.env.VITE_API_URL}/prouct`,
-          product
+          product,
+          {
+            headers: {
+              authorization: `Bearer ${token}`,
+            },
+          }
         );
         if (data.insertedId) {
           Swal.fire({

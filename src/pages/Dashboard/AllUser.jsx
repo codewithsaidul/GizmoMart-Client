@@ -11,8 +11,9 @@ import { useState } from "react";
 
 const AllUser = () => {
   const userData = useUserData();
-  const [user, setUser] = useState()
+  const [user, setUser] = useState();
   const [isModalVisible, setModalVisible] = useState(false);
+  const token = localStorage.getItem("access-token");
 
   // Get the all user from db
   const {
@@ -22,7 +23,12 @@ const AllUser = () => {
   } = useQuery({
     queryKey: "users",
     queryFn: async () => {
-      const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/users`);
+      const { data } = await axios.get(
+        `${import.meta.env.VITE_API_URL}/users`,
+        {
+          headers: { authorization: `Bearer ${token}` },
+        }
+      );
       return data;
     },
   });
@@ -44,7 +50,10 @@ const AllUser = () => {
       }
 
       const { data } = await axios.delete(
-        `${import.meta.env.VITE_API_URL}/user/${userId}`
+        `${import.meta.env.VITE_API_URL}/user/${userId}`,
+        {
+          headers: { authorization: `Bearer ${token}` },
+        }
       );
 
       if (data.deletedCount > 0) {
@@ -82,13 +91,10 @@ const AllUser = () => {
     if (userData?.role !== role) {
       setModalVisible(!isModalVisible);
 
-      const userData = users.find(user => user._id === userId);
+      const userData = users.find((user) => user._id === userId);
       setUser(userData);
     }
-
-
   };
-
 
   //   Showing Loading Screen if Data Loading
   if (isLoading) return <Loading />;
@@ -155,7 +161,11 @@ const AllUser = () => {
 
             {isModalVisible && (
               <div>
-                <Modal user={user} refetch={refetch} setModalVisible={setModalVisible} />
+                <Modal
+                  user={user}
+                  refetch={refetch}
+                  setModalVisible={setModalVisible}
+                />
               </div>
             )}
           </div>

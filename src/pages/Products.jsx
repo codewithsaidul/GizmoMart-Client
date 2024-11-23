@@ -6,7 +6,10 @@ import { useQuery } from "@tanstack/react-query";
 import Loading from "../components/Shared/Loading";
 import ProductCard from "../components/Product/ProductCard";
 import { useEffect, useState } from "react";
-import { FaRegArrowAltCircleLeft, FaRegArrowAltCircleRight } from "react-icons/fa";
+import {
+  FaRegArrowAltCircleLeft,
+  FaRegArrowAltCircleRight,
+} from "react-icons/fa";
 
 const Products = () => {
   const [search, setSearch] = useState("");
@@ -17,25 +20,33 @@ const Products = () => {
   const [uniqueCategory, setUniqueCategory] = useState([]);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-  const limit = 3;
+  const limit = 9;
+  const token = localStorage.getItem("access-token");
 
   // Get All Products
-  const { refetch, data: products = [], isLoading } = useQuery({
+  const {
+    refetch,
+    data: products = [],
+    isLoading,
+  } = useQuery({
     queryKey: ["products", "search", "sort", "brand", "category"],
     queryFn: async () => {
       const { data } = await axios.get(
         `${
           import.meta.env.VITE_API_URL
-        }/products?productName=${search}&page=${page}&limit=${limit}&sort=${sort}&productBrand=${brand}&productCategory=${category}`
+        }/products?productName=${search}&page=${page}&limit=${limit}&sort=${sort}&productBrand=${brand}&productCategory=${category}`,
+        {
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
+        }
       );
-      setUniqueBrand(data.brand)
-      setUniqueCategory(data.category)
-      setTotalPages(Math.ceil(data.totalProducts / 3))
+      setUniqueBrand(data.brand);
+      setUniqueCategory(data.category);
+      setTotalPages(Math.ceil(data.totalProducts / limit));
       return data;
     },
   });
-
-
 
   useEffect(() => {
     if (search) {
@@ -50,9 +61,7 @@ const Products = () => {
     if (category) {
       refetch();
     }
-  }, [search, page, sort, brand, category, refetch])
-
- 
+  }, [search, page, sort, brand, category, refetch]);
 
   // Handle Search
   const handleSearch = (e) => {
@@ -61,14 +70,13 @@ const Products = () => {
     e.target.search.value = "";
   };
 
-
   // Handle page numeber dynamically
   const handlePage = (pageNumber) => {
     if (pageNumber > 0 && pageNumber <= totalPages) {
       setPage(pageNumber);
-      window.scrollTo({top: 0, behavior: 'smooth'});
+      window.scrollTo({ top: 0, behavior: "smooth" });
     }
-  }
+  };
 
   // Handle Reset For Resting Serarch, Sort, or Filer
   const handleReset = () => {
@@ -96,7 +104,7 @@ const Products = () => {
 
       {/* =============== Filter By Category, Brand & All Products ================= */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
-        <div className="lg:col-span-3">
+        <div className="lg:col-span-3 h-full">
           <ProductSidebar
             setBrand={setBrand}
             setCategory={setCategory}
@@ -106,18 +114,38 @@ const Products = () => {
           />
         </div>
         <div className="lg:col-span-9">
-          <ProductCard products={products.products} />
+          {products.products.length === 0 ? (
+            <div className="flex justify-center items-center min-h-[calc(100vh-100px)] text-center">
+              <p className="text-2xl text-black font-semibold">
+                Data Not Found
+              </p>
+            </div>
+          ) : (
+            <ProductCard products={products.products} />
+          )}
 
           {/* ================= Pagination ===================== */}
-          <div className="flex justify-center items-center gap-2 my-8">
-            <button onClick={() => handlePage(page - 1)} className="btn rounded-full" disabled={page === 1}>
-              <FaRegArrowAltCircleLeft size={24} />
-            </button>
-            <p>Page {page} of {totalPages}</p>
-            <button onClick={() => handlePage(page + 1)} className="btn rounded-full" disabled={page === totalPages}>
-              <FaRegArrowAltCircleRight size={24} />
-            </button>
-          </div>
+          {products.products.length !== 0 && (
+            <div className="flex justify-center items-center gap-2 my-8">
+              <button
+                onClick={() => handlePage(page - 1)}
+                className="btn rounded-full"
+                disabled={page === 1}
+              >
+                <FaRegArrowAltCircleLeft size={24} />
+              </button>
+              <p>
+                Page {page} of {totalPages}
+              </p>
+              <button
+                onClick={() => handlePage(page + 1)}
+                className="btn rounded-full"
+                disabled={page === totalPages}
+              >
+                <FaRegArrowAltCircleRight size={24} />
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </div>

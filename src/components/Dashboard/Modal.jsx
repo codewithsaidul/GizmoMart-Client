@@ -10,6 +10,8 @@ const Modal = ({ user, setModalVisible, refetch }) => {
     formState: { errors },
   } = useForm();
 
+  const token = localStorage.getItem('access-token')
+
   const handleUpdate = async (data) => {
     const role = data.role;
     const status = data.status;
@@ -18,7 +20,13 @@ const Modal = ({ user, setModalVisible, refetch }) => {
       setModalVisible(false);
       const { data } = await axios.patch(
         `${import.meta.env.VITE_API_URL}/userUpdate/${user._id}`,
-        updatedUser
+        updatedUser,
+        {
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
+        }
+        
       );
 
       if (data.modifiedCount > 0) {

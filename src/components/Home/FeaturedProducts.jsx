@@ -5,16 +5,26 @@ import FeaturedProduct from "./FeaturedProduct";
 
 const FeaturedProducts = () => {
 
-  const { data: products = [], isLoading} = useQuery({
+  const token = localStorage.getItem('access-token')
+
+
+  const { data: products = [], isLoading } = useQuery({
     queryKey: "products",
     queryFn: async () => {
-      const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/products`);
+      const { data } = await axios.get(
+        `${import.meta.env.VITE_API_URL}/products`,
+        {
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
+        }
+      );
       return data.products;
-    }
-  })
+    },
+  });
 
   // Showing Loading Screen If Data Not Found
-  if(isLoading) return <Loading />
+  if (isLoading) return <Loading />;
 
   return (
     <div className="my-20">
@@ -24,9 +34,9 @@ const FeaturedProducts = () => {
 
       {/* ============== Featured Product Container ===================== */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {
-          products.slice(0, 6).map(product => <FeaturedProduct key={product._id} product={product} />)
-        }
+        {products.slice(0, 6).map((product) => (
+          <FeaturedProduct key={product._id} product={product} />
+        ))}
       </div>
     </div>
   );

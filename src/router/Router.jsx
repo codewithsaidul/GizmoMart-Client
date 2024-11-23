@@ -20,6 +20,7 @@ import Wishlists from "../pages/Wishlists";
 import ProductDetails from "../pages/ProductDetails";
 // import App from "../App";
 
+const token = localStorage.getItem("access-token");
 const router = createBrowserRouter([
   {
     path: "/",
@@ -44,7 +45,12 @@ const router = createBrowserRouter([
             <ProductDetails />
           </PrivateRoute>
         ),
-        loader: ( { params } ) => fetch(`${import.meta.env.VITE_API_URL}/product/${params.id}`)
+        loader: ({ params }) =>
+          fetch(`${import.meta.env.VITE_API_URL}/product/${params.id}`, {
+            headers: {
+              authorization: `Bearer ${token}`,
+            },
+          }),
       },
       {
         path: "/contact",
@@ -121,7 +127,11 @@ const router = createBrowserRouter([
           </SellerRoute>
         ),
         loader: ({ params }) =>
-          fetch(`${import.meta.env.VITE_API_URL}/product/${params.id}`),
+          fetch(`${import.meta.env.VITE_API_URL}/product/${params.id}`, {
+            headers: {
+              authorization: `Bearer ${token}`,
+            },
+          }),
       },
     ],
   },

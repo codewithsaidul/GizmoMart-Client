@@ -6,6 +6,7 @@ import Loading from "../components/Shared/Loading";
 
 const Carts = () => {
   const userData = useUserData();
+  const token = localStorage.getItem('access-token')
 
   const {
     refetch,
@@ -15,7 +16,11 @@ const Carts = () => {
     queryKey: ["carts", userData?.email],
     queryFn: async () => {
       const { data } = await axios.get(
-        `${import.meta.env.VITE_API_URL}/carts/${userData?.email}`
+        `${import.meta.env.VITE_API_URL}/carts/${userData?.email}`, {
+          headers: {
+            'authorization': `Bearer ${token}`,
+          },
+        }
       );
       return data;
     }, // 10 seconds

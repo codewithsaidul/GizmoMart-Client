@@ -8,9 +8,9 @@ import UseAuth from "../../hooks/useAuth";
 
 const Seller = [
   {
-    name: "All Products",
+    name: "My Products",
     icon: <AiOutlineProduct />,
-    path: "/dashboard/all-products",
+    path: "/dashboard/my-products",
   },
   {
     name: "Add Product",

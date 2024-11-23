@@ -5,13 +5,18 @@ import axios from "axios";
 const useUserData = () => {
   const { user, loading } = UseAuth();
   const [userData, setUserData] = useState(null);
+  const token = localStorage.getItem('access-token')
 
   useEffect(() => {
     const fetchUserData = async () => {
       if (user?.email) {
         try {
           const res = await axios.get(
-            `${import.meta.env.VITE_API_URL}/user/${user?.email}`
+            `${import.meta.env.VITE_API_URL}/user/${user?.email}`, {
+              headers: {
+                authorization: `Bearer ${token}`,
+              },
+            }
           );
           setUserData(res.data);
         } catch (error) {
@@ -27,7 +32,7 @@ const useUserData = () => {
     return () => {
       setUserData(null); // Optional: reset userData when the user changes
     };
-  }, [user, loading]);
+  }, [user, token, loading]);
 
   return userData;
 };

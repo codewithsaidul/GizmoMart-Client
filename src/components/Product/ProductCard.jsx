@@ -6,6 +6,7 @@ import { FaRegHeart } from "react-icons/fa";
 
 const ProductCard = ({ products }) => {
   const userData = useUserData();
+  const token = localStorage.getItem("access-token");
 
 
   // Handle Product Add to Cart
@@ -31,6 +32,11 @@ const ProductCard = ({ products }) => {
         {
           userEmail: userEmail,
           productId: productId,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
       );
 
@@ -77,6 +83,11 @@ const ProductCard = ({ products }) => {
         {
           userEmail: userEmail,
           productId: productId,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
       );
 

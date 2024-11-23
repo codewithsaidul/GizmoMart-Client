@@ -11,11 +11,11 @@ const UpdateProduct = () => {
     formState: { errors },
   } = useForm();
 
-
   const navigate = useNavigate();
-  const { user } = UseAuth()
+  const { user } = UseAuth();
+  const token = localStorage.getItem("access-token");
 
-// Get Product Data from db using Id
+  // Get Product Data from db using Id
   const {
     _id,
     productName,
@@ -24,11 +24,11 @@ const UpdateProduct = () => {
     productBrand,
     productPrice,
     productQuantity,
-    productDescription
+    productDescription,
   } = useLoaderData();
   const userId = _id;
 
-  console.log(typeof userId)
+  console.log(typeof userId);
   //   Handle Add Products
   const onSubmit = async (data) => {
     const productName = data.productName;
@@ -51,33 +51,39 @@ const UpdateProduct = () => {
       productBrand,
       productDescription,
       sellerEmail,
-      sellerStatus
+      sellerStatus,
     };
 
-
     try {
-        const { data } = await axios.patch(`${import.meta.env.VITE_API_URL}/products/update/${userId}`, product)
-        
-        if (data.modifiedCount > 0) {
-            navigate('/dashboard/my-products')
-            Swal.fire({
-              position: "top-center",
-              icon: "success",
-              title: "Product Updated Successfully",
-              showConfirmButton: false,
-              timer: 1500,
-            });
+      const { data } = await axios.patch(
+        `${import.meta.env.VITE_API_URL}/products/update/${userId}`,
+        product,
+        {
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
         }
-    } catch {
-        Swal.fire({
-            position: "top-center",
-            icon: "success",
-            title: "Product Update Failed!",
-            showConfirmButton: false,
-            timer: 1500,
-          });
-    }
+      );
 
+      if (data.modifiedCount > 0) {
+        navigate("/dashboard/my-products");
+        Swal.fire({
+          position: "top-center",
+          icon: "success",
+          title: "Product Updated Successfully",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      }
+    } catch {
+      Swal.fire({
+        position: "top-center",
+        icon: "success",
+        title: "Product Update Failed!",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    }
   };
 
   return (

@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 
 const FeaturedProduct = ({ product }) => {
   const userData = useUserData();
-
+  const token = localStorage.getItem("access-token");
 
   // Handle Product Add to cart
   const handleAddCart = async (id) => {
@@ -32,6 +32,11 @@ const FeaturedProduct = ({ product }) => {
         {
           userEmail: userEmail,
           productId: productId,
+        },
+        {
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
         }
       );
 
@@ -55,8 +60,7 @@ const FeaturedProduct = ({ product }) => {
     }
   };
 
-
-   // Handle Product Add to wishlist
+  // Handle Product Add to wishlist
   const handleAddWishList = async (id) => {
     const userRole = userData?.role;
     if (userRole === "admin" || userRole === "seller") {
@@ -79,6 +83,11 @@ const FeaturedProduct = ({ product }) => {
         {
           userEmail: userEmail,
           productId: productId,
+        },
+        {
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
         }
       );
 
