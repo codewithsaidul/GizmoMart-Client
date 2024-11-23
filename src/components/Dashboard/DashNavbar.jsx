@@ -1,10 +1,10 @@
 import { Link } from "react-router-dom";
-import UseAuth from "../../hooks/useAuth";
+import useAuth from "../../hooks/useAuth";
 import avatar from "../../assets/avatar.png";
 import PropTypes from "prop-types";
 
 const DashNavbar = ({ handleSidebar }) => {
-  const { user } = UseAuth();
+  const { user } = useAuth();
 
   return (
     <div className="bg-white shadow-md px-4 sm:px-6">

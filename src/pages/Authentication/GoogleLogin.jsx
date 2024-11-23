@@ -1,5 +1,5 @@
 import { FcGoogle } from "react-icons/fc";
-import UseAuth from "../../hooks/UseAuth";
+import useAuth from "../../hooks/useAuth";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { useLocation, useNavigate } from "react-router-dom";

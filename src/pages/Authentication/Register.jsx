@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import Image from "../../assets/loginimage.png";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import GoogleLogin from "./GoogleLogin";
-import UseAuth from "../../hooks/UseAuth";
+import useAuth from "../../hooks/useAuth";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { useEffect } from "react";

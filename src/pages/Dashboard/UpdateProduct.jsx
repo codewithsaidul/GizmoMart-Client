@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
 import axios from "axios";
 import { useLoaderData, useNavigate } from "react-router-dom";
-import UseAuth from "../../hooks/useAuth";
+import useAuth from "../../hooks/useAuth";
 
 const UpdateProduct = () => {
   const {
@@ -12,7 +12,7 @@ const UpdateProduct = () => {
   } = useForm();
 
   const navigate = useNavigate();
-  const { user } = UseAuth();
+  const { user } = useAuth();
   const token = localStorage.getItem("access-token");
 
   // Get Product Data from db using Id

@@ -4,7 +4,7 @@ import { FaCartPlus, FaHome, FaRegHeart, FaUser } from "react-icons/fa";
 import { AiOutlineProduct } from "react-icons/ai";
 import { MdOutlineAddShoppingCart } from "react-icons/md";
 import useUserData from "../../hooks/useUserData";
-import UseAuth from "../../hooks/useAuth";
+import useAuth from "../../hooks/useAuth";
 import PropTypes from "prop-types";
 
 const Seller = [

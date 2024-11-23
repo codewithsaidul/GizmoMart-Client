@@ -3,11 +3,11 @@ import { Navigate, useLocation } from "react-router-dom";
 import Loading from "../../components/Shared/Loading";
 import PropTypes from "prop-types";
 import useUserData from "../../hooks/useUserData";
-import UseAuth from "../../hooks/useAuth";
+import useAuth from "../../hooks/useAuth";
 
 
 const SellerRoute = ( { children } ) => {
-    const { user, loading } = UseAuth();
+    const { user, loading } = useAuth();
     const userData = useUserData();
     const location = useLocation();
 

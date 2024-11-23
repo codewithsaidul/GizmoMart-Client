@@ -4,7 +4,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import GoogleLogin from "./GoogleLogin";
 import Swal from "sweetalert2";
 import { useEffect } from "react";
-import UseAuth from "../../hooks/useAuth";
+import useAuth from "../../hooks/useAuth";
 
 const Login = () => {
 

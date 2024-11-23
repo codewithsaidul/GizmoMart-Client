@@ -3,10 +3,10 @@ import MyProduct from "../../components/Dashboard/MyProduct";
 import axios from "axios";
 // import useUserData from "../../hooks/useUserData"
 import Loading from "../../components/Shared/Loading";
-import UseAuth from "../../hooks/useAuth";
+import useAuth from "../../hooks/useAuth";
 
 const MyProducts = () => {
-  const { user } = UseAuth();
+  const { user } = useAuth();
   const token = localStorage.getItem('access-token')
   const sellerEmail = user?.email;
 
