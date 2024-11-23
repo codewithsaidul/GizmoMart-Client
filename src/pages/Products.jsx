@@ -114,7 +114,7 @@ const Products = () => {
           />
         </div>
         <div className="lg:col-span-9">
-          {products.products.length === 0 ? (
+          {products.products?.length === 0 ? (
             <div className="flex justify-center items-center min-h-[calc(100vh-100px)] text-center">
               <p className="text-2xl text-black font-semibold">
                 Data Not Found
@@ -125,7 +125,7 @@ const Products = () => {
           )}
 
           {/* ================= Pagination ===================== */}
-          {products.products.length !== 0 && (
+          {products.products?.length !== 0 && (
             <div className="flex justify-center items-center gap-2 my-8">
               <button
                 onClick={() => handlePage(page - 1)}

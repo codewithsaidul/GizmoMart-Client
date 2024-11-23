@@ -6,7 +6,7 @@ import useUserData from "../../hooks/useUserData";
 
 
 const AdminRoute = ( { children } ) => {
-    const { user, loading } = UseAuth();
+    const { user, loading } = useAuth();
     const userData = useUserData();
     const location = useLocation();
 
