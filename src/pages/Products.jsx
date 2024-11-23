@@ -6,6 +6,7 @@ import { useQuery } from "@tanstack/react-query";
 import Loading from "../components/Shared/Loading";
 import ProductCard from "../components/Product/ProductCard";
 import { useEffect, useState } from "react";
+import { FaRegArrowAltCircleLeft, FaRegArrowAltCircleRight } from "react-icons/fa";
 
 const Products = () => {
   const [search, setSearch] = useState("");
@@ -14,6 +15,9 @@ const Products = () => {
   const [category, setCategory] = useState("");
   const [uniqueBrand, setUniqueBrand] = useState([]);
   const [uniqueCategory, setUniqueCategory] = useState([]);
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const limit = 3;
 
   // Get All Products
   const { refetch, data: products = [], isLoading } = useQuery({
@@ -22,10 +26,11 @@ const Products = () => {
       const { data } = await axios.get(
         `${
           import.meta.env.VITE_API_URL
-        }/products?productName=${search}&sort=${sort}&productBrand=${brand}&productCategory=${category}`
+        }/products?productName=${search}&page=${page}&limit=${limit}&sort=${sort}&productBrand=${brand}&productCategory=${category}`
       );
       setUniqueBrand(data.brand)
       setUniqueCategory(data.category)
+      setTotalPages(Math.ceil(data.totalProducts / 3))
       return data;
     },
   });
@@ -45,11 +50,9 @@ const Products = () => {
     if (category) {
       refetch();
     }
-  }, [search, sort, brand, category, refetch])
+  }, [search, page, sort, brand, category, refetch])
 
  
-
-  console.log(products.products)
 
   // Handle Search
   const handleSearch = (e) => {
@@ -57,6 +60,15 @@ const Products = () => {
     setSearch(e.target.search.value);
     e.target.search.value = "";
   };
+
+
+  // Handle page numeber dynamically
+  const handlePage = (pageNumber) => {
+    if (pageNumber > 0 && pageNumber <= totalPages) {
+      setPage(pageNumber);
+      window.scrollTo({top: 0, behavior: 'smooth'});
+    }
+  }
 
   // Handle Reset For Resting Serarch, Sort, or Filer
   const handleReset = () => {
@@ -95,6 +107,17 @@ const Products = () => {
         </div>
         <div className="lg:col-span-9">
           <ProductCard products={products.products} />
+
+          {/* ================= Pagination ===================== */}
+          <div className="flex justify-center items-center gap-2 my-8">
+            <button onClick={() => handlePage(page - 1)} className="btn rounded-full" disabled={page === 1}>
+              <FaRegArrowAltCircleLeft size={24} />
+            </button>
+            <p>Page {page} of {totalPages}</p>
+            <button onClick={() => handlePage(page + 1)} className="btn rounded-full" disabled={page === totalPages}>
+              <FaRegArrowAltCircleRight size={24} />
+            </button>
+          </div>
         </div>
       </div>
     </div>

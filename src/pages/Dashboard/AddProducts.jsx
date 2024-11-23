@@ -17,8 +17,8 @@ const AddProducts = () => {
   const onSubmit = async (data) => {
     const productName = data.productName;
     const productImage = data.productImage;
-    const productPrice = data.productPrice;
-    const productQuantity = data.productQuantity;
+    const productPrice = parseFloat(data.productPrice);
+    const productQuantity = parseInt(data.productQuantity);
     const productCategory = data.productCategory;
     const productBrand = data.productBrand;
     const productDescription = data.productDescription;

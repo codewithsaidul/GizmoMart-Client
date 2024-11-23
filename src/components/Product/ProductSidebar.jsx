@@ -1,5 +1,5 @@
 import { FaFilter } from "react-icons/fa";
-import Button from "../Shared/Button";
+import PropTypes from "prop-types";
 
 const ProductSidebar = ({
   uniqueCategory,
@@ -56,5 +56,14 @@ const ProductSidebar = ({
     </div>
   );
 };
+
+
+ProductSidebar.propTypes = {
+  uniqueCategory: PropTypes.array.isRequired,
+  uniqueBrand: PropTypes.array.isRequired,
+  setBrand: PropTypes.func.isRequired,
+  setCategory: PropTypes.func.isRequired,
+  handleReset: PropTypes.func.isRequired,
+}
 
 export default ProductSidebar;
