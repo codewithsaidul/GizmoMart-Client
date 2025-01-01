@@ -1,30 +1,11 @@
-import axios from "axios";
 import Loading from "../components/Shared/Loading";
 import Wishlist from "../components/wishlists/Wishlist";
-import { useQuery } from "@tanstack/react-query";
-import useUserData from "../hooks/useUserData";
+import useWishlist from "../hooks/useWishlist";
 
 const Wishlists = () => {
-  const userData = useUserData();
-  const token = localStorage.getItem('access-token')
 
-  const {
-    refetch,
-    data: wishlists = [],
-    isLoading,
-  } = useQuery({
-    queryKey: ["carts", userData?.email],
-    queryFn: async () => {
-      const { data } = await axios.get(
-        `${import.meta.env.VITE_API_URL}/wishlists/${userData?.email}`, {
-          headers: {
-            authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      return data;
-    }, // 10 seconds
-  });
+  const [wishlists, refetch, isLoading] = useWishlist();
+
 
   if (isLoading) return <Loading />;
 

@@ -20,6 +20,7 @@ export const AuthContext = createContext(null);
 
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  const [address, setAddress] = useState("");
   const [loading, setLoading] = useState(true);
 
   const Auth = getAuth(app);
@@ -51,6 +52,24 @@ const AuthProvider = ({ children }) => {
     return signOut(Auth);
   };
 
+
+  // get the user location automatically
+  const handleAutoLocation = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        const { latitude, longitude } = position.coords;
+
+        axios.get(`https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json`)
+        .then((response) => {
+          setAddress(response.data.display_name)
+        })
+        .catch (() => {
+          setAddress("Unable to get address")
+        })
+      });
+    }
+  }
+
   //   Track User Logged in or Logout
   useEffect(() => {
     const unSubscribe = onAuthStateChanged(Auth, (currentUser) => {
@@ -79,6 +98,7 @@ const AuthProvider = ({ children }) => {
 
   const authInfo = {
     user,
+    address,
     loading,
     CreateUser,
     LoginUser,
@@ -86,6 +106,7 @@ const AuthProvider = ({ children }) => {
     LogOutUser,
     setUser,
     setLoading,
+    handleAutoLocation
   };
 
   return (

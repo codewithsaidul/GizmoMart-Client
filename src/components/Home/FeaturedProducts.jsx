@@ -5,19 +5,14 @@ import FeaturedProduct from "./FeaturedProduct";
 
 const FeaturedProducts = () => {
 
-  const token = localStorage.getItem('access-token')
+
 
 
   const { data: products = [], isLoading } = useQuery({
     queryKey: "products",
     queryFn: async () => {
       const { data } = await axios.get(
-        `${import.meta.env.VITE_API_URL}/products`,
-        {
-          headers: {
-            authorization: `Bearer ${token}`,
-          },
-        }
+        `${import.meta.env.VITE_API_URL}/products`
       );
       return data.products;
     },

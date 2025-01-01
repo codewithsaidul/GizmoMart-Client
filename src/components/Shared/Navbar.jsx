@@ -1,15 +1,22 @@
 import { Link, NavLink } from "react-router-dom";
 import UserDropDown from "./UserDropDown";
 import useAuth from "../../hooks/useAuth";
+import { FaRegHeart } from "react-icons/fa";
+import useWishlist from "../../hooks/useWishlist";
 
 
 
 const Navbar = () => {
   const { user } = useAuth();
 
+  const [wishlists] = useWishlist();
+  const wishlistCount = wishlists.length;
+
+  
+  
 
   return (
-    <header className="bg-base-100 border-b-2 py-2">
+    <header className="bg-base-100 fixed top-0 left-0 right-0 border-b-2 py-2 z-50">
       <div className="navbar px-4 sm:px-6 md:px-8 lg:px-16 mx-auto">
         <div className="navbar-start">
           <div className="dropdown">
@@ -152,6 +159,17 @@ const Navbar = () => {
         </div>
 
         <div className="navbar-end">
+          <div className="mr-4 relative">
+            <Link to="/dashboard/wishlists" className="cursor-pointer">
+                <span>
+                  <FaRegHeart size={24} />
+                </span>
+
+                <p className="absolute -top-5 right-0 text-lg font-bold text-primary">
+                  {wishlistCount}
+                </p>
+            </Link>
+          </div>
           {user ? (
             <UserDropDown />
           ) : (

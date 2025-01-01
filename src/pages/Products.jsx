@@ -21,7 +21,6 @@ const Products = () => {
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const limit = 9;
-  const token = localStorage.getItem("access-token");
 
   // Get All Products
   const {
@@ -34,12 +33,7 @@ const Products = () => {
       const { data } = await axios.get(
         `${
           import.meta.env.VITE_API_URL
-        }/products?productName=${search}&page=${page}&limit=${limit}&sort=${sort}&productBrand=${brand}&productCategory=${category}`,
-        {
-          headers: {
-            authorization: `Bearer ${token}`,
-          },
-        }
+        }/products?productName=${search}&page=${page}&limit=${limit}&sort=${sort}&productBrand=${brand}&productCategory=${category}`
       );
       setUniqueBrand(data.brand);
       setUniqueCategory(data.category);
